@@ -9,8 +9,6 @@ export default function Header() {
   const [cartOpen, setCartOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileShopOpen, setMobileShopOpen] = useState(false)
-  const [mobileCollectionsOpen, setMobileCollectionsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState('footwear')
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
   const { pathname } = useLocation()
@@ -40,7 +38,6 @@ export default function Header() {
   const closeMobile = () => {
     setMobileOpen(false)
     setMobileShopOpen(false)
-    setMobileCollectionsOpen(false)
   }
 
   return <>
@@ -116,32 +113,7 @@ export default function Header() {
       aria-modal="true" 
       aria-label="Site Navigation"
     >
-      {/* Top 3 Tabs like COUTURE | JEWELLERY | ACCESSORIES */}
-      <div className="mobile-drawer-tabs">
-        <button 
-          type="button" 
-          className={`drawer-tab ${activeTab === 'footwear' ? 'is-active' : ''}`}
-          onClick={() => setActiveTab('footwear')}
-        >
-          COUTURE
-        </button>
-        <button 
-          type="button" 
-          className={`drawer-tab ${activeTab === 'collections' ? 'is-active' : ''}`}
-          onClick={() => setActiveTab('collections')}
-        >
-          COLLECTIONS
-        </button>
-        <button 
-          type="button" 
-          className={`drawer-tab ${activeTab === 'accessories' ? 'is-active' : ''}`}
-          onClick={() => setActiveTab('accessories')}
-        >
-          ACCESSORIES
-        </button>
-      </div>
-
-      {/* Drawer Header: Close (X) | Centered Logo | Search & Bag */}
+      {/* Drawer Header: Close (X) | Centered P PAIROZ Logo | Search & Bag */}
       <div className="mobile-drawer-header">
         <button 
           type="button" 
@@ -153,7 +125,7 @@ export default function Header() {
         </button>
 
         <Link to="/" className="drawer-logo" onClick={closeMobile}>
-          <span className="drawer-logo-initial">M</span>
+          <span className="drawer-logo-initial">P</span>
           <span className="drawer-logo-name">PAIROZ</span>
         </Link>
 
@@ -178,26 +150,9 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Menu Rows Matching Manish Malhotra Structure */}
+      {/* Menu Rows Matching Navbar Sections Exactly */}
       <div className="mobile-drawer-scroll">
-        <Link 
-          to="/shop?sort=newest" 
-          className="mobile-drawer-row mobile-tryon-row" 
-          onClick={closeMobile}
-        >
-          <span className="row-text">VIRTUAL TRY ON</span>
-          <span className="badge-new-pill">NEW</span>
-        </Link>
-
-        <Link 
-          to="/shop?sort=newest" 
-          className="mobile-drawer-row" 
-          onClick={closeMobile}
-        >
-          <span className="row-text">NEW ARRIVALS</span>
-        </Link>
-
-        {/* WOMEN / HEELS with Expandable Arrow */}
+        {/* 1. SHOP (Expandable with categories & all styles) */}
         <div className="mobile-drawer-group">
           <button 
             type="button" 
@@ -205,13 +160,13 @@ export default function Header() {
             onClick={() => setMobileShopOpen(!mobileShopOpen)}
             aria-expanded={mobileShopOpen}
           >
-            <span className="row-text">WOMEN</span>
+            <span className="row-text">SHOP</span>
             <ChevronRight size={18} className={`drawer-arrow ${mobileShopOpen ? 'is-open' : ''}`} />
           </button>
           {mobileShopOpen && (
             <div className="drawer-sublinks">
               <Link to="/shop" onClick={closeMobile} className="drawer-sublink-all">
-                All Women's Footwear →
+                View all styles →
               </Link>
               {categories.map((c) => (
                 <Link key={c.slug} to={`/category/${c.slug}`} onClick={closeMobile} className="drawer-sublink">
@@ -222,62 +177,44 @@ export default function Header() {
           )}
         </div>
 
-        {/* COLLECTIONS with Expandable Arrow */}
-        <div className="mobile-drawer-group">
-          <button 
-            type="button" 
-            className="mobile-drawer-row drawer-row-btn"
-            onClick={() => setMobileCollectionsOpen(!mobileCollectionsOpen)}
-            aria-expanded={mobileCollectionsOpen}
-          >
-            <span className="row-text">COLLECTIONS</span>
-            <ChevronRight size={18} className={`drawer-arrow ${mobileCollectionsOpen ? 'is-open' : ''}`} />
-          </button>
-          {mobileCollectionsOpen && (
-            <div className="drawer-sublinks">
-              {['Aurelia', 'Mira', 'Veloura', 'Soleil'].map((col) => (
-                <Link key={col} to={`/shop?search=${col}`} onClick={closeMobile} className="drawer-sublink">
-                  {col} Collection
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <Link to="/category/party-wear" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">JEWELLERY & EMBELLISHED</span>
+        {/* 2. NEW ARRIVALS */}
+        <Link 
+          to="/shop?sort=newest" 
+          className="mobile-drawer-row" 
+          onClick={closeMobile}
+        >
+          <span className="row-text">NEW ARRIVALS</span>
         </Link>
 
-        <Link to="/about" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">STARS OF PAIROZ</span>
+        {/* 3. OUR STORY */}
+        <Link 
+          to="/about" 
+          className="mobile-drawer-row" 
+          onClick={closeMobile}
+        >
+          <span className="row-text">OUR STORY</span>
         </Link>
 
-        <Link to="/shop?search=wedding" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">PAIROZ VOWS</span>
+        {/* 4. FAQS */}
+        <Link 
+          to="/faq" 
+          className="mobile-drawer-row" 
+          onClick={closeMobile}
+        >
+          <span className="row-text">FAQS</span>
         </Link>
 
-        <Link to="/about" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">RUNWAYS & EDITORIAL</span>
-        </Link>
-
-        <Link to="/about" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">ABOUT US</span>
-        </Link>
-
-        <Link to="/faq" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">FAQS & CARE</span>
-        </Link>
-
-        <Link to="/contact" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">CONTACT US</span>
-        </Link>
-
-        <Link to="/wishlist" className="mobile-drawer-row" onClick={closeMobile}>
-          <span className="row-text">SAVED WISHLIST ({wishlistCount})</span>
+        {/* 5. CONTACT */}
+        <Link 
+          to="/contact" 
+          className="mobile-drawer-row" 
+          onClick={closeMobile}
+        >
+          <span className="row-text">CONTACT</span>
         </Link>
 
         <div className="drawer-footer-note">
-          <p>PAIROZ HAUTE COUTURE FOOTWEAR</p>
+          <p>PAIROZ PREMIUM FOOTWEAR</p>
           <span>Complimentary Express Shipping on all orders</span>
         </div>
       </div>
