@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ChevronDown, Heart, Menu, Search, ShoppingBag, X } from 'lucide-react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
-import logo from '../../assets/WhatsApp Image 2026-10-03 at 11.15.11 AM.jpeg'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { categories } from '../../data/mockData'
 import { useCartStore, useWishlistStore } from '../../store/useStore'
 import CartDrawer from '../commerce/CartDrawer'
@@ -11,6 +10,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const { pathname } = useLocation()
   const navigate = useNavigate()
   const totalItems = useCartStore((state) => state.totalItems)
   const wishlistCount = useWishlistStore((state) => state.items.length)
@@ -22,9 +22,9 @@ export default function Header() {
   }
   return <>
     <div className="announcement">A little something for your next occasion <span>— complimentary shipping on every order</span></div>
-    <header className="site-header">
+    <header className={`site-header ${pathname === '/' ? 'site-header-overlay' : ''}`}>
       <button className="icon-button mobile-menu-trigger" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} onClick={() => setMobileOpen(!mobileOpen)}>{mobileOpen ? <X /> : <Menu />}</button>
-      <Link className="wordmark" to="/" aria-label="PAIROZ home"><img src={logo} alt="PAIROZ Premium Footwear" /></Link>
+      <Link className="wordmark" to="/" aria-label="PAIROZ home"><img src="/pairoz-logo.png" alt="PAIROZ Premium Footwear" /></Link>
       <nav className={`primary-nav ${mobileOpen ? 'mobile-open' : ''}`}>
         <NavLink to="/shop" onClick={() => setMobileOpen(false)}>Shop <ChevronDown size={14} /></NavLink>
         <div className="mega-menu">{categories.map((category) => <Link key={category.slug} to={`/category/${category.slug}`} onClick={() => setMobileOpen(false)}>{category.name}<span>Explore the edit</span></Link>)}<Link className="mega-all" to="/shop">View all styles →</Link></div>

@@ -1,13 +1,24 @@
 const image = (id, width = 900) =>
   `https://${id.startsWith('premium_') ? 'plus' : 'images'}.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`
 
+export const campaignVideos = [
+  '/3454830-uhd_2160_4096_25fps.mp4',
+  '/3936462-hd_1920_1080_25fps.mp4',
+  '/6371956-hd_1920_1080_30fps.mp4',
+  '/7316094-uhd_2160_3840_25fps.mp4',
+  '/8061666-uhd_3840_2160_25fps.mp4',
+  '/8083681-uhd_3840_2160_24fps.mp4',
+  '/9758397-uhd_4096_2160_25fps.mp4',
+  '/9807773-uhd_4096_2160_25fps.mp4',
+]
+
 export const categories = [
-  { name: 'Stilettos', slug: 'stilettos', image: image('photo-1519415943484-9fa1873496d4') },
-  { name: 'Pumps', slug: 'pumps', image: image('photo-1605732440685-d0654d81aa30') },
-  { name: 'Block Heels', slug: 'block-heels', image: image('photo-1605733513549-de9b150bd70d') },
-  { name: 'Wedges', slug: 'wedges', image: image('photo-1620114884229-65d21f8c9423') },
-  { name: 'Sandals', slug: 'sandals', image: image('premium_photo-1702226631942-921d35d4183a') },
-  { name: 'Party Wear', slug: 'party-wear', image: image('premium_photo-1670984222499-b566bf5cef69') },
+  { name: 'Stilettos', slug: 'stilettos', image: image('photo-1519415943484-9fa1873496d4'), previewVideo: campaignVideos[0] },
+  { name: 'Pumps', slug: 'pumps', image: image('photo-1605732440685-d0654d81aa30'), previewVideo: campaignVideos[1] },
+  { name: 'Block Heels', slug: 'block-heels', image: image('photo-1605733513549-de9b150bd70d'), previewVideo: campaignVideos[2] },
+  { name: 'Wedges', slug: 'wedges', image: image('photo-1620114884229-65d21f8c9423'), previewVideo: campaignVideos[3] },
+  { name: 'Sandals', slug: 'sandals', image: image('premium_photo-1702226631942-921d35d4183a'), previewVideo: campaignVideos[4] },
+  { name: 'Party Wear', slug: 'party-wear', image: image('premium_photo-1670984222499-b566bf5cef69'), previewVideo: campaignVideos[5] },
 ]
 
 export const homepageImages = {
@@ -20,6 +31,10 @@ export const homepageImages = {
     image('premium_photo-1738862176120-7767fce1244f', 700),
     image('premium_photo-1738862175998-3283e92026ad', 700),
   ],
+}
+export const homepageVideos = {
+  hero: campaignVideos[6],
+  editorial: campaignVideos[7],
 }
 
 export const brands = ['PAIROZ']
@@ -84,6 +99,9 @@ const shoeDetailPhotoIds = [
   'photo-1562273138-f46be4ebdf33',
   'photo-1651047532215-a9dfed5d2cef',
   'photo-1780301662392-6fea210dcd87',
+  'photo-1543163521-1bf539c55dd2',
+  'photo-1535043934128-cf0b28d52f95',
+  'photo-1596703263926-eb0762ee17e4',
 ]
 
 export const products = productSeeds.map(([title, category, color, price, compareAtPrice, tagText], index) => {
@@ -103,7 +121,10 @@ export const products = productSeeds.map(([title, category, color, price, compar
       photo,
       image(shoeDetailPhotoIds[index % shoeDetailPhotoIds.length], 900),
       image(photoIds[(index + 1) % photoIds.length], 900),
+      image(shoeDetailPhotoIds[(index + 2) % shoeDetailPhotoIds.length], 900),
+      image(photoIds[(index + 6) % photoIds.length], 900),
     ],
+    previewVideo: campaignVideos[(index + 6) % campaignVideos.length],
     description: `A refined ${categoryName.toLowerCase()} silhouette made for celebrations, long evenings and every moment in between. Thoughtful finishing meets considered comfort.`,
     specs: {
       Material: index % 2 ? 'Premium vegan leather' : 'Satin & artisan embellishment',
