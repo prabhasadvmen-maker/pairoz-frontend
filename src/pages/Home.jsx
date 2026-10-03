@@ -120,7 +120,25 @@ export default function Home() {
 
     <section className="content-section category-section" id="category-edit"><header className="section-heading"><div><p className="eyebrow">Find your feeling</p><h2>Choose your silhouette.</h2><p className="section-intro">Six distinct edits, each with its own point of view. Hover to see every style come to life.</p></div><Link className="underlined-link" to="/shop">All footwear <ArrowRight size={15} /></Link></header><div className="category-grid">{categories.map((category, index) => <CategoryTile category={category} index={index} key={category.slug} />)}</div></section>
 
-    <section className="brand-band"><p className="eyebrow">A point of view, in every step</p><div>{featured.map((brand) => <span key={brand}>{brand}</span>)}</div></section>
+    <section className="brand-band">
+      <p className="eyebrow">A point of view, in every step</p>
+      
+      {/* Desktop view: 5 clean beautifully spaced brands */}
+      <div className="brand-band-desktop">
+        {featured.map((brand) => (
+          <span key={brand}>{brand}</span>
+        ))}
+      </div>
+
+      {/* Mobile view: smooth right to left scrolling marquee */}
+      <div className="brand-band-mobile-marquee" aria-hidden="true">
+        <div className="brand-band-mobile-track">
+          {[...featured, ...featured, ...featured, ...featured].map((brand, idx) => (
+            <span key={`${brand}-${idx}`}>{brand}</span>
+          ))}
+        </div>
+      </div>
+    </section>
 
     <section className="content-section home-products-section"><header className="section-heading"><div><p className="eyebrow">Just arrived</p><h2>New, with intention.</h2><p className="section-intro">Meet the latest PAIROZ designs: expressive details, beautiful lines and a little extra occasion.</p></div><Link className="underlined-link" to="/shop?sort=newest">Shop new arrivals <ArrowRight size={15} /></Link></header><div className="product-grid home-featured-grid">{newArrivals.map((product) => <ProductCard product={product} key={product.id} />)}</div></section>
 
@@ -153,6 +171,12 @@ export default function Home() {
         role="region"
         aria-roledescription="carousel"
         aria-label="Featured PAIROZ heels"
+        onTouchStart={(e) => { e.currentTarget._touchX = e.touches[0].clientX }}
+        onTouchEnd={(e) => {
+          const diff = e.currentTarget._touchX - e.changedTouches[0].clientX
+          if (diff > 40) setActiveSlide((activeSlide + 1) % heelSlides.length)
+          else if (diff < -40) setActiveSlide((activeSlide - 1 + heelSlides.length) % heelSlides.length)
+        }}
       >
         <article className="heel-slide" key={heelSlides[activeSlide].id}>
           <img src={heelSlides[activeSlide].images[0]} alt={heelSlides[activeSlide].title} />
@@ -162,14 +186,14 @@ export default function Home() {
             <h3>{heelSlides[activeSlide].title}</h3>
             <Link className="button button-dark" to={`/product/${heelSlides[activeSlide].slug}`}>Discover this pair <ArrowUpRight size={15} /></Link>
           </div>
-        </article>
-        <div className="heel-carousel-controls">
-          <button type="button" aria-label="Previous featured heel" onClick={() => setActiveSlide((activeSlide - 1 + heelSlides.length) % heelSlides.length)}><ArrowLeft size={17} /></button>
-          <div className="heel-carousel-dots" aria-label="Choose a featured heel">
-            {heelSlides.map((slide, index) => <button key={slide.id} type="button" className={index === activeSlide ? 'active' : ''} aria-label={`Show ${slide.title}`} aria-current={index === activeSlide ? 'true' : undefined} onClick={() => setActiveSlide(index)} />)}
+          <div className="heel-carousel-controls">
+            <button type="button" aria-label="Previous featured heel" onClick={() => setActiveSlide((activeSlide - 1 + heelSlides.length) % heelSlides.length)}><ArrowLeft size={17} /></button>
+            <div className="heel-carousel-dots" aria-label="Choose a featured heel">
+              {heelSlides.map((slide, index) => <button key={slide.id} type="button" className={index === activeSlide ? 'active' : ''} aria-label={`Show ${slide.title}`} aria-current={index === activeSlide ? 'true' : undefined} onClick={() => setActiveSlide(index)} />)}
+            </div>
+            <button type="button" aria-label="Next featured heel" onClick={() => setActiveSlide((activeSlide + 1) % heelSlides.length)}><ArrowRight size={17} /></button>
           </div>
-          <button type="button" aria-label="Next featured heel" onClick={() => setActiveSlide((activeSlide + 1) % heelSlides.length)}><ArrowRight size={17} /></button>
-        </div>
+        </article>
       </div>
     </section>
 

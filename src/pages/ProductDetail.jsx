@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, Heart, Minus, Pause, Play, Plus, ShieldCheck, Star, Truck } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
-import { campaignVideos, products } from '../data/mockData'
+import { campaignVideos, mockReviews, products } from '../data/mockData'
 import { useCartStore, useWishlistStore } from '../store/useStore'
 import ProductCard from '../components/product/ProductCard'
 
@@ -67,5 +67,55 @@ export default function ProductDetail() {
       <details className="detail-accordion" open><summary>Details & craftsmanship</summary><p>{product.description} Finished with a balanced silhouette and a cushioned feel, this pair is designed to move comfortably from first plans to the last dance.</p></details><details className="detail-accordion"><summary>Specifications & fit</summary><dl>{Object.entries(product.specs).map(([key, value]) => <div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><p>Designed for a considered fit. If you are between sizes, we recommend choosing the larger size.</p></details><details className="detail-accordion"><summary>Care & keeping</summary><p>Store in a cool, dry place away from direct sunlight. Wipe gently with a soft dry cloth and avoid water, perfume and harsh cleaners.</p></details><details className="detail-accordion"><summary>Shipping & returns</summary><p>Complimentary standard delivery across India. Unworn pairs may be returned or exchanged within 7 days of delivery.</p></details>
     </section></div><section className="content-section related-products"><header className="section-heading"><div><p className="eyebrow">Pairs well with your plans</p><h2>You may also love.</h2></div></header><div className="product-grid">{related.map((item) => <ProductCard product={item} key={item.id} />)}</div></section>
     {guideOpen && <div className="modal-backdrop" role="presentation" onClick={() => setGuideOpen(false)}><section className="size-modal" role="dialog" aria-modal="true" aria-labelledby="size-guide-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setGuideOpen(false)} aria-label="Close size guide">×</button><p className="eyebrow">Find your fit</p><h2 id="size-guide-title">Size guide</h2><p>Measure your foot from heel to longest toe, then match it to your EU size.</p><table><thead><tr><th>EU</th><th>Foot length</th></tr></thead><tbody>{[[36, 23], [37, 23.5], [38, 24], [39, 24.7], [40, 25.4], [41, 26]].map(([eu, cm]) => <tr key={eu}><td>{eu}</td><td>{cm} cm</td></tr>)}</tbody></table></section></div>}
+
+    <section className="reviews-section content-section">
+      <header className="section-heading">
+        <div>
+          <p className="eyebrow">What our customers say</p>
+          <h2>Worn &amp; loved.</h2>
+        </div>
+      </header>
+      <div className="reviews-summary">
+        <div className="reviews-score">
+          <span className="reviews-big-rating">{product.rating}</span>
+          <div className="reviews-stars-row">
+            {[1, 2, 3, 4, 5].map((s) => <Star key={s} size={20} fill={s <= Math.round(product.rating) ? '#d1b274' : 'none'} color="#d1b274" />)}
+          </div>
+          <p>Based on 36 reviews</p>
+        </div>
+        <div className="reviews-breakdown">
+          {[5, 4, 3, 2, 1].map((star, i) => {
+            const counts = [22, 10, 3, 1, 0]
+            const pct = Math.round((counts[i] / 36) * 100)
+            return (
+              <div className="breakdown-row" key={star}>
+                <span>{star}</span>
+                <Star size={11} fill="#d1b274" color="#d1b274" />
+                <div className="breakdown-bar"><div className="breakdown-fill" style={{ width: `${pct}%` }} /></div>
+                <span className="breakdown-count">{counts[i]}</span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+      <div className="reviews-grid">
+        {mockReviews.map((review) => (
+          <article className="review-card" key={review.id}>
+            <div className="review-card-top">
+              <div className="reviewer-avatar">{review.avatar}</div>
+              <div className="reviewer-info">
+                <strong className="reviewer-name">{review.name}</strong>
+                <span className="reviewer-date">{review.date}</span>
+              </div>
+              <div className="review-stars">
+                {[1, 2, 3, 4, 5].map((s) => <Star key={s} size={12} fill={s <= review.rating ? '#d1b274' : 'none'} color="#d1b274" />)}
+              </div>
+            </div>
+            <p className="review-title">{review.title}</p>
+            <p className="review-body">{review.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   </main>
 }

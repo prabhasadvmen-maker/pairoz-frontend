@@ -144,3 +144,12 @@ export const faqs = [
   { question: 'How should I care for my shoes?', answer: 'Store your pair in its dust bag, away from direct sunlight. Gently wipe with a soft dry cloth and avoid water, perfume and harsh cleaners.' },
   { question: 'Are the products ethically made?', answer: 'We work with carefully selected makers and small production runs, prioritising responsible sourcing and considered craftsmanship.' },
 ]
+
+export const mockReviews = [
+  { id: 1, name: 'Priya S.', rating: 5, title: 'Absolutely stunning', body: 'Wore these to my sister\'s wedding and received so many compliments. The craftsmanship is exceptional — they look even better in person.', date: 'September 2026', avatar: 'PS' },
+  { id: 2, name: 'Ananya R.', rating: 5, title: 'Worth every rupee', body: 'I was hesitant about the price, but the quality blew me away. The cushioned sole means I can actually dance in these all night without pain.', date: 'August 2026', avatar: 'AR' },
+  { id: 3, name: 'Meera K.', rating: 4, title: 'Elegant and comfortable', body: 'Beautiful silhouette and the colour is exactly as shown. Sizing runs slightly narrow — I\'d suggest going half a size up if you have wider feet.', date: 'August 2026', avatar: 'MK' },
+  { id: 4, name: 'Riya T.', rating: 5, title: 'A statement pair indeed', body: 'These heels have a presence of their own. Every detail — the embellishment, the heel shape — feels intentional and luxurious. My new favourites.', date: 'July 2026', avatar: 'RT' },
+  { id: 5, name: 'Simran B.', rating: 4, title: 'Great quality, fast delivery', body: 'Arrived beautifully packaged within two days. The satin finish is gorgeous and they pair perfectly with both western and traditional outfits.', date: 'July 2026', avatar: 'SB' },
+  { id: 6, name: 'Kavya N.', rating: 5, title: 'Exactly what I was looking for', body: 'I\'ve been searching for heels that feel as good as they look. PAIROZ delivered. The heel height is perfect — elevated but walkable. Will order again.', date: 'June 2026', avatar: 'KN' },
+]
